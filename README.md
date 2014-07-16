@@ -1,4 +1,4 @@
 rule-engine
 ===========
 
-Implementing Rule Engine in Rails Application
+Parse JSON data and Implementing Rule Engine in Rails Application
