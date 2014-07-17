@@ -1,0 +1,92 @@
+<center>
+
+<h1>RULE ENGINE</h1> <br>
+
+<form action="/home/index">
+<b>Value displayed from JSON url</b>
+ <select name="jvalue" style="width: 300px; height: 30px;">
+  <option value="">Select value </option>
+  <% @jsondata.values.each do |e| %>
+  <option value="<%= e %>"><%= e %></option>
+  <% end %>
+</select>
+
+<input type="submit" value="Go"> <br>
+
+<% if @jvalue1 != nil %>
+<% @jvalue1.each do |f| %> <br>
+
+<table>
+<th><b>Value selected</b></th>
+<th><b>Value class</b></th>
+<tr>
+<td>
+ <%= f %> <br>
+</td>
+<td>
+ <%= f.class %> <br>
+</td>
+</tr>
+</table> 
+
+<select name="conditions">
+  <% if f.class == String %>
+  <option value="">Select condition </option>
+  <option value="rin"> rin</option>
+  <option value="old"> old</option>
+  <option value="cris"> cris</option>
+
+  <% elsif f.class == Fixnum %>
+  
+  <option value="">Select condition </option>
+  <option value="<"> < </option>
+  <option value=">"> > </option>
+  <option value="="> = </option>
+</select>
+  <% end %>
+<input type="submit" value="Check"> <br>
+
+<% end %>
+<% end %>
+
+
+<% if @cond != "" %>
+<b>Condition selected:</b> <%= @cond %>
+ 
+ <% if @jvalue1 != nil %>
+   <% @jvalue1.each do |f1| %> <br>
+
+     <% if f1.class == Fixnum %>
+
+        <% if @cond =="<" %>
+          <%= f1 %> <%= "is < 10 ?" %>
+          <%= f1<10? "True" : "False"%>
+        <% elsif @cond ==">" %>
+          <%= f1 %> <%= "is > 10 ?" %>
+          <%= f1>10? "True" : "False"%>
+        <% elsif @cond =="=" %>
+          <%= f1 %> <%= "is = 10 ?" %>
+          <%= f1==10? "True" : "False"%>
+        <% end %>
+
+     <% elsif f1.class == String %>
+
+        <% if @cond =="rin" %>
+          <%= f1=~/[Rr]in/? "Contains #{@cond}" : "Doesnt contain #{@cond}" %>
+        <% elsif @cond =="old" %>
+          <%= f1=~/[Oo]ld/? "Contains #{@cond}" : "Doesn't contain #{@cond}"%>
+        <% elsif @cond =="cris" %>
+          <%= f1=~/[Cc]ris/? "Contains #{@cond}" : "Doesn't contain #{@cond}"%>
+        <% end %>
+
+     <% end %>
+
+   <%end%>
+ <%end%>
+<% end %>
+
+
+
+</form>
+
+</center>
