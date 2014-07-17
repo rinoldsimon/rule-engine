@@ -19,7 +19,7 @@ class HomeController < ApplicationController
     @jvalue = params[:jvalue] 
 
     if @jvalue != nil 
-      @jvalue1 = @jvalue.split(" ").map do |entry| 
+      @jvalue1 = @jvalue.split("  ").map do |entry| 
         if entry.to_i == 0 && entry != "0" # this is a string 
           entry 
         elsif entry = ( Text(entry) rescue Integer(entry) rescue Float(entry) rescue Date.parse(entry) rescue Time.parse(entry) rescue nil) 

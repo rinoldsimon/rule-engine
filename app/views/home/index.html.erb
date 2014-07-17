@@ -5,9 +5,12 @@
 <form action="/home/index">
 <b>Value displayed from JSON url</b>
  <select name="jvalue" style="width: 300px; height: 30px;">
-  <option value="">Select value </option>
+  <option value="" selected = selected>Select value </option>
   <% @jsondata.values.each do |e| %>
-  <option value="<%= e %>"><%= e %></option>
+  <option value="<%= e %>" <% if @jvalue == e -%> selected="selected" <% end -%>
+  > 
+  <%= e %></option>
+
   <% end %>
 </select>
 
@@ -34,7 +37,7 @@
   <option value="">Select condition </option>
   <option value="rin"> rin</option>
   <option value="old"> old</option>
-  <option value="cris"> cris</option>
+  <option value="mon"> mon</option>
 
   <% elsif f.class == Fixnum %>
   
@@ -50,7 +53,7 @@
 <% end %>
 
 
-<% if @cond != "" %>
+<% if @cond != "" && @cond != nil %>
 <b>Condition selected:</b> <%= @cond %>
  
  <% if @jvalue1 != nil %>
@@ -75,8 +78,8 @@
           <%= f1=~/[Rr]in/? "Contains #{@cond}" : "Doesnt contain #{@cond}" %>
         <% elsif @cond =="old" %>
           <%= f1=~/[Oo]ld/? "Contains #{@cond}" : "Doesn't contain #{@cond}"%>
-        <% elsif @cond =="cris" %>
-          <%= f1=~/[Cc]ris/? "Contains #{@cond}" : "Doesn't contain #{@cond}"%>
+        <% elsif @cond =="mon" %>
+          <%= f1=~/[Mn]on/? "Contains #{@cond}" : "Doesn't contain #{@cond}"%>
         <% end %>
 
      <% end %>
