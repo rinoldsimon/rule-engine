@@ -1,8 +1,8 @@
 
 class HomeController < ApplicationController 
 
-  before_filter :index, :only => [:index1] 
-  before_filter :index1, :only => [:index] 
+  #before_filter :index, :only => [:index1] 
+  #before_filter :index1, :only => [:index] 
 
   require 'httparty' 
 
@@ -11,7 +11,7 @@ class HomeController < ApplicationController
     #parsing json data 
     @url = "https://graph.facebook.com/crisrinold" 
     @jsondata = JSON.parse HTTParty.get(@url).response.body 
-
+  
     #storing json data in database 
     @jsondata1 = {:jsondata => @jsondata} 
     Home.collection.insert(@jsondata1) 

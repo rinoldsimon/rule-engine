@@ -40,3 +40,5 @@ gem 'mongoid', github: 'mongoid/mongoid'
 gem 'bson_ext'
 
 gem 'httparty'
+
+gem 'foundation-rails'
