@@ -42,3 +42,5 @@ gem 'bson_ext'
 gem 'httparty'
 
 gem 'foundation-rails'
+
+gem 'wongi-engine'

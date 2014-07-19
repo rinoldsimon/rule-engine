@@ -69,15 +69,26 @@
 
      <% if f1.class == Fixnum %>
 
-        <% if @cond =="<" %>
-          <td><%= f1 %> <%= "is < 10 ?" %></td>
-          <td> <%= f1<10? "True" : "False"%> </td>
-        <% elsif @cond ==">" %>
-          <td><%= f1 %> <%= "is > 10 ?" %></td>
-          <td> <%= f1>10? "True" : "False"%> </td>
-        <% elsif @cond =="=" %>
-          <td><%= f1 %> <%= "is = 10 ?" %></td>
-          <td> <%= f1==10? "True" : "False"%> </td>
+
+        <%
+          engine = Wongi::Engine.create
+          engine << [ @cond =="<", @cond ==">", @cond =="=" ]
+  
+          engine.each :_, :_, :_ do |item|
+        %>
+
+            <% if item.subject %>
+              <td><%= "#{f1}is < 10 ?" %></td>
+              <td> <%= f1<10? "True" : "False"%> </td>
+            <% elsif item.predicate %>
+              <td><%= "#{f1}is > 10 ?" %></td>
+              <td> <%= f1>10? "True" : "False"%> </td>
+            <% elsif item.object %>
+              <td><%= "#{f1}is = 10 ?" %></td>
+              <td> <%= f1==10? "True" : "False"%> </td>
+            <% end %>
+
+
         <% end %>
 
      <% elsif f1.class == String %>
