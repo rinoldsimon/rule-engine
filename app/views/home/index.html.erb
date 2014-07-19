@@ -94,13 +94,13 @@
      <% elsif f1.class == String %>
 
         <% if @cond =="rin" %>
-          <td><%= f1 %> <%= "-> #{@cond}" %></td>
+          <td><%= "#{f1} -> #{@cond}" %></td>
           <td> <%= f1=~/[Rr]in/? "Contains #{@cond}" : "Doesnt contain #{@cond}" %> </td>
         <% elsif @cond =="old" %>
-          <td><%= f1 %> <%= "-> #{@cond}" %></td>
+          <td><%= "#{f1} -> #{@cond}" %></td>
           <td> <%= f1=~/[Oo]ld/? "Contains #{@cond}" : "Doesn't contain #{@cond}"%> </td>
         <% elsif @cond =="mon" %>
-          <td><%= f1 %> <%= "-> #{@cond}" %></td>
+          <td><%= "#{f1} -> #{@cond}" %></td>
           <td> <%= f1=~/[Mm]on/? "Contains #{@cond}" : "Doesn't contain #{@cond}"%> </td>
         <% end %>
 
