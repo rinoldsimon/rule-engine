@@ -39,8 +39,10 @@ gem 'spring',        group: :development
 gem 'mongoid', github: 'mongoid/mongoid'
 gem 'bson_ext'
 
-gem 'httparty'
+gem 'httparty' 
 
 gem 'foundation-rails'
 
 gem 'wongi-engine'
+
+gem 'time_diff'

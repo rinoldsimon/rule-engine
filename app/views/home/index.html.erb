@@ -47,8 +47,20 @@
   <option value="<"> < </option>
   <option value=">"> > </option>
   <option value="="> = </option>
-</select>
+
+  <% elsif f.class == Date %>
+  
+  <option value="">Select condition </option>
+  <option value="leapyear"> leap year </option>
+  <option value="difference"> find difference </option>
+  
+  <% elsif f.class == Time %>
+  
+  <option value="">Select condition </option>
+  <option value="difference"> find difference </option>
   <% end %>
+</select>
+  
 <input type="submit" value="Check"> <br>
 
 <% end %>
@@ -102,6 +114,43 @@
         <% elsif @cond =="mon" %>
           <td><%= "#{f1} -> #{@cond}" %></td>
           <td> <%= f1=~/[Mm]on/? "Contains #{@cond}" : "Doesn't contain #{@cond}"%> </td>
+        <% end %>
+
+
+     <% elsif f1.class == Date %>
+
+        <% if @cond =="leapyear" %>
+          <td><%= "#{f1.year} -> #{@cond}" %></td>
+          <td> <%= Date.leap?( f1.year )? "#{f1.year} is not leap year" : "#{f1.year} is leap year" %> </td>
+        <% elsif @cond =="difference" %>
+          <td><%= "#{f1} (-) #{Time.now.strftime("%d-%m-%Y")}" %></td>
+          <% 
+           a = Date.parse(f1.strftime("%d-%m-%Y"))
+           b = Date.parse(Time.now.strftime("%d-%m-%Y")) 
+          %>
+          <!-- <td> <%= b.mjd-a.mjd %> </td> -->
+
+          <% diff = Time.diff(b, a) %>
+            <td><b><%= "Year" %></b><br><%= diff[:year] %></td>
+            <td><b><%= "Month" %></b><br><%= diff[:month] %></td>
+            <td><b><%= "Week" %></b><br><%= diff[:week] %></td>
+            <td><b><%= "Day" %></b><br><%= diff[:day] %></td>
+        <% end %>
+
+
+     <% elsif f1.class == Time %>
+
+        <% if @cond =="difference" %>
+          <td><%= "#{f1.strftime("%H:%M:%S")} (-) #{Time.now.strftime("%H:%M:%S")}" %></td>
+          <% 
+           a = f1.strftime("%H:%M:%S")
+           b = Time.now.strftime("%H:%M:%S")
+          %>
+
+          <% diff = Time.diff(b, a) %>
+            <td><b><%= "Hour" %></b><br><%= diff[:hour] %></td>
+            <td><b><%= "Minute" %></b><br><%= diff[:minute] %></td>
+            <td><b><%= "Second" %></b><br><%= diff[:second] %></td>
         <% end %>
 
      <% end %>

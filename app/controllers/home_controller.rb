@@ -5,6 +5,10 @@ class HomeController < ApplicationController
   #before_filter :index1, :only => [:index] 
 
   require 'httparty'
+  require 'open-uri'
+  
+  require 'time'
+  require 'time_diff'
   
   def index 
 
@@ -22,8 +26,8 @@ class HomeController < ApplicationController
     "name"=> "Rinold Simon",
     "username"=> "crisrinold",
     "ratings"=> "94.30",
-    "startdate"=> "12-4-2012",
-    "enddate"=> "01-4-2014",
+    "startdate"=> "11-12-2012",
+    "enddate"=> "01-1-2014",
     "starttime"=> "12:30:54",
     "endtime"=> "5:30:12"
      }
