@@ -9,11 +9,12 @@ class HomeController < ApplicationController
   
   require 'time'
   require 'time_diff'
+  require 'date'
   
   def index 
 
     #parsing json data 
-    #@url = "https://graph.facebook.com/crisrinold" 
+    @url = "https://graph.facebook.com/crisrinold" 
     #@jsondata = JSON.parse HTTParty.get(@url).response.body 
     
     @jsondata = {
@@ -46,6 +47,8 @@ class HomeController < ApplicationController
         entry.nil? ? entry : entry 
         end end 
     end 
+
+    @usrcond = params[:usercondition]
 
     @cond = params[:conditions] 
 

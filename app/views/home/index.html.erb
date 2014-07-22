@@ -5,11 +5,11 @@
 <form action="/home/index">
 <b>JSON data displayed from url: </b><i><%= @url %></i><br>
  <select name="jvalue" style="width: 300px; height: 40px;">
-  <option value="" selected = selected>Select value </option>
-  <% @jsondata.values.each do |e| %>
-  <option value="<%= e %>" <% if @jvalue == e -%> selected="selected" <% end -%>
+  <option value="" selected = selected>Select field </option>
+  <% @jsondata.each do |f1,v| %>
+  <option value="<%= v %>" <% if @jvalue == v -%> selected="selected" <% end -%>
   > 
-  <%= e %></option>
+  <%= f1 %></option>
 
   <% end %>
 </select>
@@ -20,64 +20,77 @@
 <% @jvalue1.each do |f| %> <br>
 
 <table>
-<th><b>Value selected</b></th>
-<th><b>Value class</b></th>
+  <th><b>Value</b></th>
+  <th><b>Class</b></th>
 <tr>
-<td>
- <%= f %> <br>
-</td>
-<td>
- <%= f.class %> <br>
-</td>
+  <td><%= f %> <br></td>
+  <td><%= f.class %> <br></td>
 </tr>
 </table> 
 
 <b>Conditions for type: </b><i><%= f.class %></i>
 
+<% if f.class != String %>
 <select name="conditions" style="width: 300px; height: 40px;"> 
-  <% if f.class == String %>
-  <option value="">Select condition </option>
-  <option value="rin"> rin</option>
-  <option value="old"> old</option>
-  <option value="mon"> mon</option>
-
-  <% elsif f.class == Fixnum %>
+  <% if f.class == Fixnum %>
   
   <option value="">Select condition </option>
-  <option value="<"> < </option>
-  <option value=">"> > </option>
-  <option value="="> = </option>
+  <option value="<"<% if @cond == "<" -%> selected="selected" <% end -%>> < </option>
+  <option value=">"<% if @cond == ">" -%> selected="selected" <% end -%>> > </option>
+  <option value="="<% if @cond == "=" -%> selected="selected" <% end -%>> = </option>
 
   <% elsif f.class == Date %>
   
   <option value="">Select condition </option>
-  <option value="leapyear"> leap year </option>
-  <option value="difference"> find difference </option>
+  <option value="difference"<% if @cond == "difference" -%> selected="selected" <% end -%>> find difference </option>
   
   <% elsif f.class == Time %>
   
   <option value="">Select condition </option>
-  <option value="difference"> find difference </option>
+  <option value="difference"<% if @cond == "difference" -%> selected="selected" <% end -%>> find difference </option>
   <% end %>
 </select>
-  
+<% end %>
+
+      <% if f.class == Date %>
+      Enter Value <input type="date" style="width: 200px; height: 40px;" name="usercondition">
+      <% elsif f.class == Time %>
+      Enter Value <input type="time" style="width: 200px; height: 40px;" name="usercondition">
+      <% elsif f.class == Fixnum || f.class == Float %>
+      Enter Value <input type="number" style="width: 200px; height: 40px;" name="usercondition">
+      <% else %>
+      Enter Value <input type="text" style="width: 200px; height: 40px;" name="usercondition">
+      <% end %>
+
+<% if f.class == String %>  
+<input type="submit" value="Check for Regex"> <br>
+<% elsif %>
 <input type="submit" value="Check"> <br>
+<% end %>
 
 <% end %>
 <% end %>
 
 
-<% if @cond != "" && @cond != nil %>
-
-<table>
-<th>Condition selected</th>
-<th>Applying rule</th>
-<th>Result</th>
-<tr>
- <td><%= @cond %> </td>
+<% if @usrcond != "" && @usrcond != nil %>
  
  <% if @jvalue1 != nil %>
    <% @jvalue1.each do |f1| %> <br>
+
+<table>
+  <% if f1.class == String %>
+    <th>Value entered</th> 
+  <% else %>
+    <th>Condition selected</th> 
+  <% end %>
+    <th>Applying rule</th>
+    <th>Result</th>
+  <tr>
+    <% if f1.class == Fixnum || f1.class == Date || f1.class == Time%>
+    <td><%= @cond %> </td>
+    <% else %>
+    <td><%= @usrcond %> </td>
+    <%end%>
 
      <% if f1.class == Fixnum %>
 
@@ -90,14 +103,14 @@
         %>
 
             <% if item.subject %>
-              <td><%= "#{f1}is < 10 ?" %></td>
-              <td> <%= f1<10? "True" : "False"%> </td>
+              <td><%= "#{f1} < #{params[:usercondition]} ?" %></td>
+              <td> <%= f1<@usrcond.to_i ? "True" : "False"%> </td>
             <% elsif item.predicate %>
-              <td><%= "#{f1}is > 10 ?" %></td>
-              <td> <%= f1>10? "True" : "False"%> </td>
+              <td><%= "#{f1} > #{params[:usercondition]} ?" %></td>
+              <td> <%= f1>@usrcond.to_i ? "True" : "False"%> </td>
             <% elsif item.object %>
-              <td><%= "#{f1}is = 10 ?" %></td>
-              <td> <%= f1==10? "True" : "False"%> </td>
+              <td><%= "#{f1} = #{params[:usercondition]} ?" %></td>
+              <td> <%= f1==@usrcond.to_i ? "True" : "False"%> </td>
             <% end %>
 
 
@@ -105,52 +118,57 @@
 
      <% elsif f1.class == String %>
 
-        <% if @cond =="rin" %>
-          <td><%= "#{f1} -> #{@cond}" %></td>
-          <td> <%= f1=~/[Rr]in/? "Contains #{@cond}" : "Doesnt contain #{@cond}" %> </td>
-        <% elsif @cond =="old" %>
-          <td><%= "#{f1} -> #{@cond}" %></td>
-          <td> <%= f1=~/[Oo]ld/? "Contains #{@cond}" : "Doesn't contain #{@cond}"%> </td>
-        <% elsif @cond =="mon" %>
-          <td><%= "#{f1} -> #{@cond}" %></td>
-          <td> <%= f1=~/[Mm]on/? "Contains #{@cond}" : "Doesn't contain #{@cond}"%> </td>
-        <% end %>
-
+          <td><%= "#{f1} -> #{params[:usercondition]}" %></td>
+          <td> <%= f1=~/#{@usrcond}/? "Contains #{@usrcond}" : "Doesnt contain #{@usrcond}" %> </td>
+        
 
      <% elsif f1.class == Date %>
 
-        <% if @cond =="leapyear" %>
-          <td><%= "#{f1.year} -> #{@cond}" %></td>
-          <td> <%= Date.leap?( f1.year )? "#{f1.year} is not leap year" : "#{f1.year} is leap year" %> </td>
-        <% elsif @cond =="difference" %>
-          <td><%= "#{f1} (-) #{Time.now.strftime("%d-%m-%Y")}" %></td>
+        <% if @cond =="difference" %>
+          <td><%= "#{@usrcond} (-) #{f1}" %></td>
           <% 
            a = Date.parse(f1.strftime("%d-%m-%Y"))
-           b = Date.parse(Time.now.strftime("%d-%m-%Y")) 
+           b = @usrcond
           %>
-          <!-- <td> <%= b.mjd-a.mjd %> </td> -->
+          
 
           <% diff = Time.diff(b, a) %>
             <td><b><%= "Year" %></b><br><%= diff[:year] %></td>
             <td><b><%= "Month" %></b><br><%= diff[:month] %></td>
             <td><b><%= "Week" %></b><br><%= diff[:week] %></td>
             <td><b><%= "Day" %></b><br><%= diff[:day] %></td>
+            
+            <% a1 = a.to_date %>
+            <% b1 = b.to_date %>
+            <% if b1 > a1 || b1 == a1%>
+             <td><b><%= "Ahead/Behind" %></b><br><%= "Ahead" %></td> 
+            <% else %>
+             <td><b><%= "Ahead/Behind" %></b><br><%= "Behind" %></td>
+            <% end %>
         <% end %>
 
 
      <% elsif f1.class == Time %>
 
         <% if @cond =="difference" %>
-          <td><%= "#{f1.strftime("%H:%M:%S")} (-) #{Time.now.strftime("%H:%M:%S")}" %></td>
+          <td><%= "#{@usrcond} (-) #{f1.strftime("%H:%M:%S")}" %></td>
           <% 
            a = f1.strftime("%H:%M:%S")
-           b = Time.now.strftime("%H:%M:%S")
+           b = @usrcond
           %>
 
           <% diff = Time.diff(b, a) %>
             <td><b><%= "Hour" %></b><br><%= diff[:hour] %></td>
             <td><b><%= "Minute" %></b><br><%= diff[:minute] %></td>
             <td><b><%= "Second" %></b><br><%= diff[:second] %></td>
+
+            <% a1 = a.to_time %>
+            <% b1 = b.to_time %>
+            <% if b1 > a1 || b1 == a1%>
+             <td><b><%= "Ahead/Behind" %></b><br><%= "Ahead" %></td> 
+            <% else %>
+             <td><b><%= "Ahead/Behind" %></b><br><%= "Behind" %></td>
+            <% end %>
         <% end %>
 
      <% end %>
