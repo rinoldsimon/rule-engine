@@ -95,7 +95,7 @@
             <input id="right-label" type="date" name="usercondition">
           </div>
           <div class="small-3 columns">
-            <input class="button postfix" type="submit" value="Check">
+            <input data-reveal-id="myModal" class="button postfix" type="submit" value="Check">
           </div>
           </div>
           </div>
@@ -108,7 +108,7 @@
             <input id="right-label" type="time" name="usercondition">
           </div>
           <div class="small-3 columns">
-            <input class="button postfix" type="submit" value="Check">
+            <input data-reveal-id="myModal" class="button postfix" type="submit" value="Check">
           </div> 
           </div>
           </div>       
@@ -121,7 +121,7 @@
             <input id="right-label" type="number" placeholder="e.g. 1234" name="usercondition">
           </div>
           <div class="small-3 columns">
-            <input class="button postfix" type="submit" value="Check">
+            <input data-reveal-id="myModal" class="button postfix" type="submit" value="Check">
           </div> 
           </div>
           </div>         
@@ -134,7 +134,7 @@
             <input id="right-label" type="text" placeholder="e.g. 12.34" name="usercondition">
           </div>
           <div class="small-3 columns">
-            <input class="button postfix" type="submit" value="Check">
+            <input data-reveal-id="myModal" class="button postfix" type="submit" value="Check">
           </div>
           </div>
           </div>
@@ -147,7 +147,7 @@
             <input id="right-label" type="text" placeholder="e.g. xxxx" name="usercondition">
           </div>
           <div class="small-4 columns">
-            <input class="button postfix" type="submit" value="Check for Regex">
+            <input data-reveal-id="myModal" class="button postfix" type="submit" value="Check for Regex">
           </div>
           </div>
           </div>
@@ -163,6 +163,8 @@
  <% if @jvalue1 != nil %>
    <% @jvalue1.each do |f1| %>
 
+<div id="myModal" class="reveal-modal" data-reveal>
+<center>
 <table>
   <% if f1.class == String %>
     <th>Value entered</th> 
@@ -263,6 +265,9 @@
  <%end%>
 </tr>
 </table>
+</center>
+<a class="close-reveal-modal">&#215;</a>
+</div>
 <% end %>
 
 </form>
