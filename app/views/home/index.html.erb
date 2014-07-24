@@ -1,37 +1,70 @@
-<center>
-
-<h1>RULE ENGINE</h1> <br>
+<nav class="top-bar" data-topbar>
+    <li class="text-center">
+      <h1><a href="/">RULE ENGINE</a></h1>
+    </li>
+</nav>
+<br>
 
 <form action="/home/index">
-<b>JSON data displayed from url: </b><i><%= @url %></i><br>
- <select name="jvalue" style="width: 300px; height: 40px;">
-  <option value="" selected = selected>Select field </option>
+
+<div class="large-4 columns">
+<div class="row collapse">
+
+<div class="small-9 columns">
+ <select name="jvalue">
+  <option value="">Select field </option>
   <% @jsondata.each do |f1,v| %>
+
+   <% v1 = v.split("  ").map do |entry| 
+        if entry.to_i == 0 && entry != "0" # this is a string 
+          entry 
+        elsif entry = ( Text(entry) rescue Integer(entry) rescue Float(entry) rescue Date.parse(entry) rescue Time.parse(entry) rescue nil) 
+        entry.nil? ? entry : entry 
+        end end 
+   %>
+
   <option value="<%= v %>" <% if @jvalue == v -%> selected="selected" <% end -%>
   > 
-  <%= f1 %></option>
-
+      <%= f1 %>
+      <% v1. each do |v2| %>
+      <%= [v2.class] %>
+      <% end %>
+  </option>
   <% end %>
-</select>
+ </select>
+</div>
 
-<input type="submit" value="Go"> <br>
+<div class="small-3 columns">
+<input class="button postfix" type="submit" value="Go">
+</div>
+
+</div>
+</div>
 
 <% if @jvalue1 != nil %>
-<% @jvalue1.each do |f| %> <br>
+<% @jvalue1.each do |f| %>
 
-<table>
-  <th><b>Value</b></th>
-  <th><b>Class</b></th>
-<tr>
-  <td><%= f %> <br></td>
-  <td><%= f.class %> <br></td>
-</tr>
-</table> 
+<div class="large-2 columns">
+<div class="row collapse">
 
-<b>Conditions for type: </b><i><%= f.class %></i>
+<div class="small-3 columns">
+  <span class="prefix">Value</span>
+</div>  
+<div class="small-9 columns">
+<% if f.class == Time %>
+  <input type="text" value = <%= f.strftime("%H:%M:%S") %> readonly>
+  <% else %>
+  <input type="text" value = <%= f %> readonly>
+  <% end %>
+</div>
+
+</div>
+</div>
 
 <% if f.class != String %>
-<select name="conditions" style="width: 300px; height: 40px;"> 
+
+<div class="large-2 columns">
+<select name="conditions" > 
   <% if f.class == Fixnum %>
   
   <option value="">Select condition </option>
@@ -50,23 +83,76 @@
   <option value="difference"<% if @cond == "difference" -%> selected="selected" <% end -%>> find difference </option>
   <% end %>
 </select>
+</div>
+
 <% end %>
 
       <% if f.class == Date %>
-      Enter Value <input type="date" style="width: 200px; height: 40px;" name="usercondition">
+          
+          <div class="large-4 columns">
+          <div class="row collapse">
+          <div class="small-9 columns">
+            <input id="right-label" type="date" name="usercondition">
+          </div>
+          <div class="small-3 columns">
+            <input class="button postfix" type="submit" value="Check">
+          </div>
+          </div>
+          </div>
+        
       <% elsif f.class == Time %>
-      Enter Value <input type="time" style="width: 200px; height: 40px;" name="usercondition">
-      <% elsif f.class == Fixnum || f.class == Float %>
-      Enter Value <input type="number" style="width: 200px; height: 40px;" name="usercondition">
+           
+          <div class="large-4 columns">
+          <div class="row collapse">      
+          <div class="small-9 columns">
+            <input id="right-label" type="time" name="usercondition">
+          </div>
+          <div class="small-3 columns">
+            <input class="button postfix" type="submit" value="Check">
+          </div> 
+          </div>
+          </div>       
+        
+      <% elsif f.class == Fixnum %>        
+          
+          <div class="large-4 columns">
+          <div class="row collapse">
+          <div class="small-9 columns">
+            <input id="right-label" type="number" placeholder="e.g. 1234" name="usercondition">
+          </div>
+          <div class="small-3 columns">
+            <input class="button postfix" type="submit" value="Check">
+          </div> 
+          </div>
+          </div>         
+       
+      <% elsif f.class == Float %>
+          
+          <div class="large-4 columns">
+          <div class="row collapse">
+          <div class="small-9 columns">
+            <input id="right-label" type="text" placeholder="e.g. 12.34" name="usercondition">
+          </div>
+          <div class="small-3 columns">
+            <input class="button postfix" type="submit" value="Check">
+          </div>
+          </div>
+          </div>
+          
       <% else %>
-      Enter Value <input type="text" style="width: 200px; height: 40px;" name="usercondition">
-      <% end %>
+           
+          <div class="large-6 columns">
+          <div class="row collapse">          
+          <div class="small-8 columns">
+            <input id="right-label" type="text" placeholder="e.g. xxxx" name="usercondition">
+          </div>
+          <div class="small-4 columns">
+            <input class="button postfix" type="submit" value="Check for Regex">
+          </div>
+          </div>
+          </div>
 
-<% if f.class == String %>  
-<input type="submit" value="Check for Regex"> <br>
-<% elsif %>
-<input type="submit" value="Check"> <br>
-<% end %>
+      <% end %>
 
 <% end %>
 <% end %>
@@ -75,7 +161,7 @@
 <% if @usrcond != "" && @usrcond != nil %>
  
  <% if @jvalue1 != nil %>
-   <% @jvalue1.each do |f1| %> <br>
+   <% @jvalue1.each do |f1| %>
 
 <table>
   <% if f1.class == String %>
@@ -179,8 +265,4 @@
 </table>
 <% end %>
 
-
-
 </form>
-
-</center>

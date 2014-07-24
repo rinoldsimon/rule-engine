@@ -14,7 +14,7 @@ class HomeController < ApplicationController
   def index 
 
     #parsing json data 
-    @url = "https://graph.facebook.com/crisrinold" 
+    #@url = "https://graph.facebook.com/crisrinold" 
     #@jsondata = JSON.parse HTTParty.get(@url).response.body 
     
     @jsondata = {
@@ -48,9 +48,9 @@ class HomeController < ApplicationController
         end end 
     end 
 
-    @usrcond = params[:usercondition]
-
     @cond = params[:conditions] 
+
+    @usrcond = params[:usercondition]
 
   end 
 
