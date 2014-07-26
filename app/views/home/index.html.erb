@@ -165,14 +165,20 @@
  <% if @jvalue1 != nil %>
    <% @jvalue1.each do |f1| %>
 
-<table class="reveal-modal">
+<br><br><br>
+
+<div class = "row">
+<center>
+<div data-alert class="alert-box info radius">
+
+<table>
   <% if f1.class == String %>
-    <th>Value entered</th> 
+    <th>|Value entered|</th> 
   <% else %>
-    <th>Condition selected</th> 
+    <th>|Condition selected|</th> 
   <% end %>
-    <th>Applying rule</th>
-    <th>Result</th>
+    <th>|Applying rule|</th>
+    <th>|Result|</th>
   <tr>
     <% if f1.class == Fixnum || f1.class == Date || f1.class == Time%>
     <td><%= @cond %> </td>
@@ -265,6 +271,10 @@
  <%end%>
 </tr>
 </table>
+<a href="#" class="close">&times;</a>
+</div>
+</center>
+</div>
 <% end %>
 
 </form>

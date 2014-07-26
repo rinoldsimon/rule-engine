@@ -59,12 +59,12 @@ $body-font-weight: $font-weight-normal;
 // $default-float: left;
 
 // We use these as default colors throughout
-$primary-color: #008CBA;
+ $primary-color: #008CBA;
 // $secondary-color: #e7e7e7;
 // $alert-color: #f04124;
 // $success-color: #43AC6A;
 // $warning-color: #f08a24;
-// $info-color: #a0d3e8;
+   $info-color: #b8ffb0;
 
 // We use these to make sure border radius matches unless we want it different.
 // $global-radius: 3px;
@@ -255,7 +255,7 @@ $primary-color: #008CBA;
 // $include-html-alert-classes: $include-html-classes;
 
 // We use this to control alert padding.
-// $alert-padding-top: rem-calc(14);
+  $alert-padding-top: rem-calc(5);
 // $alert-padding-default-float: $alert-padding-top;
 // $alert-padding-opposite-direction: $alert-padding-top + rem-calc(10);
 // $alert-padding-bottom: $alert-padding-top;
@@ -276,13 +276,13 @@ $primary-color: #008CBA;
 // $alert-bottom-margin: rem-calc(20);
 
 // We use these to style the close buttons
-// $alert-close-color: #333;
-// $alert-close-top: 50%;
-// $alert-close-position: rem-calc(4);
-// $alert-close-font-size: rem-calc(22);
-// $alert-close-opacity: 0.3;
-// $alert-close-opacity-hover: 0.5;
-// $alert-close-padding: 9px 6px 4px;
+   $alert-close-color: #333;
+   $alert-close-top: 20%;
+   $alert-close-position: rem-calc(10);
+   $alert-close-font-size: rem-calc(30);
+   $alert-close-opacity: 0.5;
+   $alert-close-opacity-hover: 1;
+   $alert-close-padding: 10px 10px 10px;
 
 // We use this to control border radius
 // $alert-radius: $global-radius;
@@ -1096,13 +1096,13 @@ $sub-nav-active-cursor: default;
 // $include-html-table-classes: $include-html-classes;
 
 // These control the background color for the table and even rows
-// $table-bg: #fff;
-// $table-even-row-bg: #f9f9f9  ;
+   $table-bg: #b8ffb0;
+   $table-even-row-bg: #b8ffb0;
 
 // These control the table cell border style
 // $table-border-style: solid;
 // $table-border-size: 1px;
-// $table-border-color: #ddd;
+  $table-border-color: #b8ffb0;
 
 // These control the table head styles
 // $table-head-bg: #f5f5f5  ;
@@ -1197,7 +1197,7 @@ $sub-nav-active-cursor: default;
 // $topbar-bg: $topbar-bg-color;
 
 // Height and margin
-$topbar-height: 60px;
+   $topbar-height: 60px;
 // $topbar-margin-bottom: 0;
 
 // Controlling the styles for the title in the top bar
