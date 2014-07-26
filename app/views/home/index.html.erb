@@ -5,6 +5,7 @@
 </nav>
 <br>
 
+
 <form action="/home/index">
 
 <div class="large-4 columns">
@@ -53,6 +54,8 @@
 <div class="small-9 columns">
 <% if f.class == Time %>
   <input type="text" value = <%= f.strftime("%H:%M:%S") %> readonly>
+  <% elsif f.class == Date %>
+  <input type="text" value = <%= f.strftime("%m/%d/%Y") %> readonly>
   <% else %>
   <input type="text" value = <%= f %> readonly>
   <% end %>
@@ -95,7 +98,7 @@
             <input id="right-label" type="date" name="usercondition">
           </div>
           <div class="small-3 columns">
-            <input data-reveal-id="myModal" class="button postfix" type="submit" value="Check">
+            <input class="button postfix" type="submit" value="Check">
           </div>
           </div>
           </div>
@@ -108,7 +111,7 @@
             <input id="right-label" type="time" name="usercondition">
           </div>
           <div class="small-3 columns">
-            <input data-reveal-id="myModal" class="button postfix" type="submit" value="Check">
+            <input class="button postfix" type="submit" value="Check">
           </div> 
           </div>
           </div>       
@@ -121,7 +124,7 @@
             <input id="right-label" type="number" placeholder="e.g. 1234" name="usercondition">
           </div>
           <div class="small-3 columns">
-            <input data-reveal-id="myModal" class="button postfix" type="submit" value="Check">
+            <input class="button postfix" type="submit" value="Check">
           </div> 
           </div>
           </div>         
@@ -134,7 +137,7 @@
             <input id="right-label" type="text" placeholder="e.g. 12.34" name="usercondition">
           </div>
           <div class="small-3 columns">
-            <input data-reveal-id="myModal" class="button postfix" type="submit" value="Check">
+            <input class="button postfix" type="submit" value="Check">
           </div>
           </div>
           </div>
@@ -147,7 +150,7 @@
             <input id="right-label" type="text" placeholder="e.g. xxxx" name="usercondition">
           </div>
           <div class="small-4 columns">
-            <input data-reveal-id="myModal" class="button postfix" type="submit" value="Check for Regex">
+            <input class="button postfix" type="submit" value="Check for Regex">
           </div>
           </div>
           </div>
@@ -157,15 +160,12 @@
 <% end %>
 <% end %>
 
-
 <% if @usrcond != "" && @usrcond != nil %>
  
  <% if @jvalue1 != nil %>
    <% @jvalue1.each do |f1| %>
 
-<div id="myModal" class="reveal-modal" data-reveal>
-<center>
-<table>
+<table class="reveal-modal">
   <% if f1.class == String %>
     <th>Value entered</th> 
   <% else %>
@@ -215,7 +215,7 @@
         <% if @cond =="difference" %>
           <td><%= "#{@usrcond} (-) #{f1}" %></td>
           <% 
-           a = Date.parse(f1.strftime("%d-%m-%Y"))
+           a = Date.parse(f1.strftime("%d/%m/%Y"))
            b = @usrcond
           %>
           
@@ -265,9 +265,6 @@
  <%end%>
 </tr>
 </table>
-</center>
-<a class="close-reveal-modal">&#215;</a>
-</div>
 <% end %>
 
 </form>

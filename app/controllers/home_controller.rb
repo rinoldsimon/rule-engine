@@ -27,8 +27,8 @@ class HomeController < ApplicationController
     "name"=> "Rinold Simon",
     "username"=> "crisrinold",
     "ratings"=> "94.30",
-    "startdate"=> "11-12-2012",
-    "enddate"=> "01-1-2014",
+    "startdate"=> "15-1-2012",
+    "enddate"=> "25-5-2014",
     "starttime"=> "12:30:54",
     "endtime"=> "5:30:12"
      }
