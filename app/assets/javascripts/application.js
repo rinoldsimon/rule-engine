@@ -16,4 +16,25 @@
 //= require turbolinks
 //= require_tree .
 
-$(function(){ $(document).foundation(); });
+$(function() {
+    $(document).foundation();
+});
+
+$(function() {
+
+    var clearAlert = setTimeout(function() {
+        $(".alert-box.info").fadeOut('slow')
+    }, 3000);
+
+    $(document).on("click", ".alert-box.info a.close", function(event) {
+        clearTimeout(clearAlert);
+    });
+
+    $(document).on("click", ".alert-box a.close", function(event) {
+        event.preventDefault();
+        $(this).closest(".alert-box").fadeOut(function(event) {
+            $(this).remove();
+        });
+    });
+
+});
