@@ -184,7 +184,6 @@
     <td><%= @usrcond %> </td>
      <% if f1.class == Fixnum %>
 
-
         <%
           engine = Wongi::Engine.create
           engine << [ @cond =="<", @cond ==">", @cond =="=" ]
@@ -200,7 +199,8 @@
               <td> <%= f1>@usrcond.to_i ? "True" : "False"%> </td>
             <% elsif item.object %>
               <td><%= "#{f1} = #{params[:usercondition]} ?" %></td>
-              <td> <%= f1==@usrcond.to_i ? "True" : "False"%> </td>
+              <% res= f1==@usrcond.to_i ? "True" : "False"%> 
+              <td><%= res %></td>
             <% end %>
 
 
@@ -275,17 +275,12 @@
 
 </form>
 
-<h1>Listing Rules saved</h1>
+<center>
 <table>
   <thead>
     <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>ID</th>
+      <th>JSON data</th>
     </tr>
   </thead>
 
@@ -298,3 +293,34 @@
     <% end %>
   </tbody>
 </table>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>FIELD</th>
+      <th>DATATYPE</th>
+      <th>VALUE</th>
+      <th>CONDITION</th>
+      <th>USER CONDITION</th>
+      <th>RESULT</th>
+      <th>ACTION</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rules.each do |r| %>
+      <tr>
+        <td><%= r.id %></td>
+        <td><%= r.field %></td>
+        <td><%= r.datatype %></td>
+        <td><%= r.value %></td>
+        <td><%= r.condition %></td>
+        <td><%= r.usercond %></td>
+        <td><%= r.result %></td>
+        <td><%= r.action %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</center>
