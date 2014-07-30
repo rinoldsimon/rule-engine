@@ -5,7 +5,6 @@
 </nav>
 <br>
 
-
 <form action="/home/index">
 
 <div class="large-4 columns">
@@ -26,7 +25,7 @@
 
   <option value="<%= v %>" <% if @jvalue == v -%> selected="selected" <% end -%>
   > 
-      <%= f1 %>
+      <%= f1.humanize %>
       <% v1. each do |v2| %>
       <%= [v2.class] %>
       <% end %>
@@ -51,20 +50,19 @@
 <div class="small-3 columns">
   <span class="prefix">Value</span>
 </div>  
+
 <div class="small-9 columns">
 <% if f.class == Time %>
   <input type="text" value = <%= f.strftime("%H:%M:%S") %> readonly>
   <% elsif f.class == Date %>
   <input type="text" value = <%= f.strftime("%m/%d/%Y") %> readonly>
   <% else %>
-  <input type="text" value = <%= f %> readonly>
+  <textarea wrap="off" readonly><%= f %> </textarea>
   <% end %>
 </div>
 
 </div>
 </div>
-
-<% if f.class != String %>
 
 <div class="large-2 columns">
 <select name="conditions" > 
@@ -84,11 +82,15 @@
   
   <option value="">Select condition </option>
   <option value="difference"<% if @cond == "difference" -%> selected="selected" <% end -%>> find difference </option>
+
+  <% elsif f.class == String %>
+
+  <option value="">Select condition </option>
+  <option value="regex"<% if @cond == "regex" -%> selected="selected" <% end -%>> regular expression </option>
+  
   <% end %>
 </select>
 </div>
-
-<% end %>
 
       <% if f.class == Date %>
           
@@ -108,7 +110,7 @@
           <div class="large-4 columns">
           <div class="row collapse">      
           <div class="small-9 columns">
-            <input id="right-label" type="time" name="usercondition">
+            <input id="right-label" type="time" name="usercondition" >
           </div>
           <div class="small-3 columns">
             <input class="button postfix" type="submit" value="Check">
@@ -142,15 +144,15 @@
           </div>
           </div>
           
-      <% else %>
+      <% elsif f.class == String %>
            
-          <div class="large-6 columns">
+          <div class="large-4 columns">
           <div class="row collapse">          
-          <div class="small-8 columns">
+          <div class="small-9 columns">
             <input id="right-label" type="text" placeholder="e.g. xxxx" name="usercondition">
           </div>
-          <div class="small-4 columns">
-            <input class="button postfix" type="submit" value="Check for Regex">
+          <div class="small-3 columns">
+            <input class="button postfix" type="submit" value="Check">
           </div>
           </div>
           </div>
@@ -165,27 +167,21 @@
  <% if @jvalue1 != nil %>
    <% @jvalue1.each do |f1| %>
 
-<br><br><br>
+<br><br><br><br>
 
 <div class = "row">
 <center>
 <div data-alert class="alert-box info radius">
 
 <table>
-  <% if f1.class == String %>
-    <th>|Value entered|</th> 
-  <% else %>
     <th>|Condition selected|</th> 
-  <% end %>
+    <th>|Value entered|</th> 
     <th>|Applying rule|</th>
     <th>|Result|</th>
   <tr>
-    <% if f1.class == Fixnum || f1.class == Date || f1.class == Time%>
-    <td><%= @cond %> </td>
-    <% else %>
-    <td><%= @usrcond %> </td>
-    <%end%>
 
+    <td><%= @cond %> </td>
+    <td><%= @usrcond %> </td>
      <% if f1.class == Fixnum %>
 
 
@@ -278,3 +274,27 @@
 <% end %>
 
 </form>
+
+<h1>Listing Rules saved</h1>
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @homes.each do |h| %>
+      <tr>
+        <td><%= h.id %></td>
+        <td><textarea cols = "50" rows = "10"><%= h.jsondata %></textarea></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

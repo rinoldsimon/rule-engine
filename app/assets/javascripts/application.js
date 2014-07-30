@@ -14,7 +14,8 @@
 //= require jquery_ujs
 //= require foundation
 //= require turbolinks
-//= require_tree .
+//= require_tree 
+//= require gritter 
 
 $(function() {
     $(document).foundation();
@@ -24,7 +25,7 @@ $(function() {
 
     var clearAlert = setTimeout(function() {
         $(".alert-box.info").fadeOut('slow')
-    }, 3000);
+    }, 5000);
 
     $(document).on("click", ".alert-box.info a.close", function(event) {
         clearTimeout(clearAlert);

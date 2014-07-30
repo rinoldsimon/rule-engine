@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  field: MyString
+  datatype: MyString
+  value: MyString
+  condition: MyString
+  usercond: MyString
+  result: MyString
+  action: MyString
+
+two:
+  field: MyString
+  datatype: MyString
+  value: MyString
+  condition: MyString
+  usercond: MyString
+  result: MyString
+  action: MyString

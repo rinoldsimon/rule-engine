@@ -1,8 +1,8 @@
 
 class HomeController < ApplicationController 
 
-  #before_filter :index, :only => [:index1] 
-  #before_filter :index1, :only => [:index] 
+  before_filter :index, :only => [:index1] 
+  before_filter :index1, :only => [:index] 
 
   require 'httparty'
   require 'open-uri'
@@ -27,16 +27,23 @@ class HomeController < ApplicationController
     "name"=> "Rinold Simon",
     "username"=> "crisrinold",
     "ratings"=> "94.30",
-    "startdate"=> "15-1-2012",
-    "enddate"=> "25-5-2014",
-    "starttime"=> "12:30:54",
-    "endtime"=> "5:30:12"
+    "start_date"=> "15-1-2012",
+    "end_date"=> "25-5-2014",
+    "start_time"=> "12:30:54",
+    "end_time"=> "5:30:12"
      }
 
     #storing json data in database 
-    @jsondata1 = {:jsondata => @jsondata} 
-    Home.collection.insert(@jsondata1) 
+    if params[:jvalue] == nil 
+      @jsondata1 = {:jsondata => @jsondata} 
+      Home.collection.insert(@jsondata1) 
+    end
 
+    #listing data from mongodb
+    @homes = Home.all
+    @rules = Rule.all
+
+    #identifying data types
     @jvalue = params[:jvalue] 
 
     if @jvalue != nil 
