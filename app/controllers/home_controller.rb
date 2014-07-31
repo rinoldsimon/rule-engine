@@ -34,23 +34,9 @@ class HomeController < ApplicationController
      }
 
     #storing json data in database 
-    if params[:jvalue] == nil
-      @jsondata1 = {jsondata: @jsondata} 
-      Home.collection.insert(@jsondata1) 
-    end
+    
 
-    if params[:jvalue]!="" and params[:conditions]!="" and params[:usercondition]!=""
-      @jsondata2 = {
-      				field: "1",
-					datatype: "1",
-					value: params[:jvalue],
-					condition: params[:conditions],
-					usercond: params[:usercondition],
-					result: "1",
-					action: "1"
-				   } 
-      Rule.collection.insert(@jsondata2) 
-    end
+    
 
     #listing data from mongodb
     @homes = Home.all

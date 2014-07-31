@@ -25,9 +25,9 @@
 
   <option value="<%= v %>" <% if @jvalue == v -%> selected="selected" <% end -%>
   > 
-      <%= f1.humanize %>
+      <% @field= f1.humanize %> <%= @field %>
       <% v1. each do |v2| %>
-      <%= [v2.class] %>
+      <% @class= v2.class %> <%= [@class] %>
       <% end %>
   </option>
   <% end %>
@@ -76,12 +76,15 @@
   <% elsif f.class == Date %>
   
   <option value="">Select condition </option>
-  <option value="difference"<% if @cond == "difference" -%> selected="selected" <% end -%>> find difference </option>
+  <option value="ahead"<% if @cond == "ahead" -%> selected="selected" <% end -%>> find ahead 
+  </option>
+  <option value="behind"<% if @cond == "behind" -%> selected="selected" <% end -%>> find behind </option>
   
   <% elsif f.class == Time %>
   
   <option value="">Select condition </option>
-  <option value="difference"<% if @cond == "difference" -%> selected="selected" <% end -%>> find difference </option>
+  <option value="ahead"<% if @cond == "ahead" -%> selected="selected" <% end -%>> find ahead   </option>
+  <option value="behind"<% if @cond == "behind" -%> selected="selected" <% end -%>> find behind </option>
 
   <% elsif f.class == String %>
 
@@ -193,34 +196,37 @@
 
             <% if item.subject %>
               <td><%= "#{f1} < #{params[:usercondition]} ?" %></td>
-              <td> <%= f1<@usrcond.to_i ? "True" : "False"%> </td>
+              <% @res= f1<@usrcond.to_i ? "True" : "False"%>
+              <td><%= @res %></td>
             <% elsif item.predicate %>
               <td><%= "#{f1} > #{params[:usercondition]} ?" %></td>
-              <td> <%= f1>@usrcond.to_i ? "True" : "False"%> </td>
+              <% @res= f1>@usrcond.to_i ? "True" : "False"%>
+              <td><%= @res %></td>
             <% elsif item.object %>
               <td><%= "#{f1} = #{params[:usercondition]} ?" %></td>
-              <% res= f1==@usrcond.to_i ? "True" : "False"%> 
-              <td><%= res %></td>
+              <% @res= f1==@usrcond.to_i ? "True" : "False"%> 
+              <td><%= @res %></td>
             <% end %>
-
 
         <% end %>
 
      <% elsif f1.class == String %>
 
+          <% if @cond =="regex" %>
           <td><%= "#{f1} -> #{params[:usercondition]}" %></td>
-          <td> <%= f1=~/#{@usrcond}/? "Contains #{@usrcond}" : "Doesnt contain #{@usrcond}" %> </td>
+          <% @res= f1=~/#{@usrcond}/? "True" : "False" %>
+          <td><%= @res %></td>
+          <% end %>
         
 
      <% elsif f1.class == Date %>
 
-        <% if @cond =="difference" %>
+        <% if @cond =="behind" %>
           <td><%= "#{@usrcond} (-) #{f1}" %></td>
           <% 
            a = Date.parse(f1.strftime("%d/%m/%Y"))
            b = @usrcond
-          %>
-          
+          %>       
 
           <% diff = Time.diff(b, a) %>
             <td><b><%= "Year" %></b><br><%= diff[:year] %></td>
@@ -230,17 +236,39 @@
             
             <% a1 = a.to_date %>
             <% b1 = b.to_date %>
-            <% if b1 > a1 || b1 == a1%>
-             <td><b><%= "Ahead/Behind" %></b><br><%= "Ahead" %></td> 
+            <% if b1 < a1 || b1 == a1%>
+             <td><b><%= "True/False" %></b><br><% @res= "True" %> <%= @res %></td> 
             <% else %>
-             <td><b><%= "Ahead/Behind" %></b><br><%= "Behind" %></td>
+             <td><b><%= "True/False" %></b><br><% @res= "False" %> <%= @res %></td>
+            <% end %>
+
+        <% elsif @cond =="ahead" %>
+          <td><%= "#{@usrcond} (-) #{f1}" %></td>
+          <% 
+           a = Date.parse(f1.strftime("%d/%m/%Y"))
+           b = @usrcond
+          %>
+          
+          <% diff = Time.diff(b, a) %>
+            <td><b><%= "Year" %></b><br><%= diff[:year] %></td>
+            <td><b><%= "Month" %></b><br><%= diff[:month] %></td>
+            <td><b><%= "Week" %></b><br><%= diff[:week] %></td>
+            <td><b><%= "Day" %></b><br><%= diff[:day] %></td>
+            
+            <% a1 = a.to_date %>
+            <% b1 = b.to_date %>
+            <% if b1 > a1 || b1 == a1%>
+             <td><b><%= "True/False" %></b><br><% @res= "True" %> <%= @res %></td> 
+            <% else %>
+             <td><b><%= "True/False" %></b><br><% @res= "False" %> <%= @res %></td>
             <% end %>
         <% end %>
 
 
+
      <% elsif f1.class == Time %>
 
-        <% if @cond =="difference" %>
+        <% if @cond =="ahead" %>
           <td><%= "#{@usrcond} (-) #{f1.strftime("%H:%M:%S")}" %></td>
           <% 
            a = f1.strftime("%H:%M:%S")
@@ -255,9 +283,29 @@
             <% a1 = a.to_time %>
             <% b1 = b.to_time %>
             <% if b1 > a1 || b1 == a1%>
-             <td><b><%= "Ahead/Behind" %></b><br><%= "Ahead" %></td> 
+             <td><b><%= "True/False" %></b><br><% @res= "True" %> <%= @res %></td> 
             <% else %>
-             <td><b><%= "Ahead/Behind" %></b><br><%= "Behind" %></td>
+             <td><b><%= "True/False" %></b><br><% @res= "False" %> <%= @res %></td>
+            <% end %>
+        
+        <% elsif @cond =="behind" %>
+          <td><%= "#{@usrcond} (-) #{f1.strftime("%H:%M:%S")}" %></td>
+          <% 
+           a = f1.strftime("%H:%M:%S")
+           b = @usrcond
+          %>
+
+          <% diff = Time.diff(b, a) %>
+            <td><b><%= "Hour" %></b><br><%= diff[:hour] %></td>
+            <td><b><%= "Minute" %></b><br><%= diff[:minute] %></td>
+            <td><b><%= "Second" %></b><br><%= diff[:second] %></td>
+
+            <% a1 = a.to_time %>
+            <% b1 = b.to_time %>
+            <% if b1 < a1 || b1 == a1%>
+             <td><b><%= "True/False" %></b><br><% @res= "True" %> <%= @res %></td> 
+            <% else %>
+             <td><b><%= "True/False" %></b><br><% @res= "False" %> <%= @res %></td>
             <% end %>
         <% end %>
 
@@ -275,25 +323,29 @@
 
 </form>
 
+<%
+if @jvalue == nil
+      @jsondata1 = {jsondata: @jsondata} 
+      Home.collection.insert(@jsondata1) 
+    end
+%>
+
+<% 
+if @jvalue!=nil && @cond!=nil && @usrcond!=nil && @jvalue!="" && @cond!="" && @usrcond!=""
+      @jsondata2 = {
+      				field: @field,
+					datatype: @class.to_s,
+					value: @jvalue,
+					condition: @cond,
+					usercond: @usrcond,
+					result: @res,
+					action: "1"
+				   } 
+      Rule.collection.insert(@jsondata2) 
+    end
+%>
+
 <center>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>JSON data</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @homes.each do |h| %>
-      <tr>
-        <td><%= h.id %></td>
-        <td><textarea cols = "50" rows = "10"><%= h.jsondata %></textarea></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
 <table>
   <thead>
     <tr>

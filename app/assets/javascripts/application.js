@@ -25,7 +25,7 @@ $(function() {
 
     var clearAlert = setTimeout(function() {
         $(".alert-box.info").fadeOut('slow')
-    }, 5000);
+    }, 15000);
 
     $(document).on("click", ".alert-box.info a.close", function(event) {
         clearTimeout(clearAlert);
