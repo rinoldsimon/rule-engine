@@ -57,5 +57,5 @@ gem 'time_diff'
 
 gem "gritter", "1.1.0"
 
-gem "letter_opener", :group => :development
+#gem "letter_opener", :group => :development
 gem 'letter_opener_web', '~> 1.2.0', :group => :development

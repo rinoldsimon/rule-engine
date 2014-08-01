@@ -165,7 +165,6 @@ DEPENDENCIES
   httparty
   jbuilder (~> 2.0)
   jquery-rails
-  letter_opener
   letter_opener_web (~> 1.2.0)
   mongoid!
   pg
