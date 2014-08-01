@@ -56,3 +56,5 @@ gem 'wongi-engine'
 gem 'time_diff'
 
 gem "gritter", "1.1.0"
+
+gem "letter_opener", :group => :development

@@ -23,15 +23,17 @@
         end end 
    %>
 
+   <%@field=@jsondata.key(@jvalue)%>
+
   <option value="<%= v %>" <% if @jvalue == v -%> selected="selected" <% end -%>
   > 
-      <% @field= f1.humanize %> <%= @field %>
+      <%= f1.humanize %>
       <% v1. each do |v2| %>
-      <% @class= v2.class %> <%= [@class] %>
+      <%= [v2.class] %>
       <% end %>
   </option>
   <% end %>
- </select>
+ </select> 
 </div>
 
 <div class="small-3 columns">
@@ -323,6 +325,7 @@
 
 </form>
 
+<!-- storing json data in database -->
 <%
 if @jvalue == nil
       @jsondata1 = {jsondata: @jsondata} 
@@ -331,25 +334,40 @@ if @jvalue == nil
 %>
 
 <% 
+  if @res=="True" 
+    @action = "Mail"
+  else
+    @action ="--"
+  end
+%>
+
+<!-- storing rule in database -->
+
+<% if @jvalue1 != nil %>
+<% @jvalue1.each do |f| %>
+
+<% 
 if @jvalue!=nil && @cond!=nil && @usrcond!=nil && @jvalue!="" && @cond!="" && @usrcond!=""
       @jsondata2 = {
-      				field: @field,
-					datatype: @class.to_s,
+      		field: @field.humanize,
+					datatype: "#{f.class}",
 					value: @jvalue,
 					condition: @cond,
 					usercond: @usrcond,
 					result: @res,
-					action: "1"
+					action: @action
 				   } 
       Rule.collection.insert(@jsondata2) 
     end
 %>
 
+<% end %>
+<% end %>
+
 <center>
 <table>
   <thead>
     <tr>
-      <th>ID</th>
       <th>FIELD</th>
       <th>DATATYPE</th>
       <th>VALUE</th>
@@ -363,16 +381,24 @@ if @jvalue!=nil && @cond!=nil && @usrcond!=nil && @jvalue!="" && @cond!="" && @u
   <tbody>
     <% @rules.each do |r| %>
       <tr>
-        <td><%= r.id %></td>
         <td><%= r.field %></td>
         <td><%= r.datatype %></td>
         <td><%= r.value %></td>
         <td><%= r.condition %></td>
         <td><%= r.usercond %></td>
         <td><%= r.result %></td>
-        <td><%= r.action %></td>
+        <% @a= r.action %> <td><%= @a %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 </center>
+
+<!-- action mailer -->
+ <%
+ if @jvalue!=nil && @cond!=nil && @usrcond!=nil && @jvalue!="" && @cond!="" && @usrcond!=""
+    if @a == "Mail"
+        UserMailer.welcome_email.deliver
+    end
+ end
+ %>

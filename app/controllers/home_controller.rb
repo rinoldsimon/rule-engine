@@ -33,11 +33,6 @@ class HomeController < ApplicationController
     "end_time"=> "5:30:12"
      }
 
-    #storing json data in database 
-    
-
-    
-
     #listing data from mongodb
     @homes = Home.all
     @rules = Rule.all
