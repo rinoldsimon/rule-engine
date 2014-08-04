@@ -1,13 +1,13 @@
 <nav class="top-bar" data-topbar>
     <li class="text-center">
-      <h1><a href="/"><font color=#369DE1 >RULE ENGINE</font></a></h1>
+      <h1><a href="/"><font color=#066490 >RULE ENGINE</font></a></h1>
     </li>
 </nav>
 <br>
 
 <form action="/home/index">
 
-<div class="large-4 columns">
+<div class="large-5 columns">
 <div class="row collapse">
 
 <div class="small-9 columns">
@@ -46,6 +46,7 @@
 <% if @jvalue1 != nil %>
 <% @jvalue1.each do |f| %>
 
+<!--
 <div class="large-2 columns">
 <div class="row collapse">
 
@@ -65,6 +66,7 @@
 
 </div>
 </div>
+-->
 
 <div class="large-2 columns">
 <select name="conditions" > 
@@ -99,7 +101,7 @@
 
       <% if f.class == Date %>
           
-          <div class="large-4 columns">
+          <div class="large-5 columns">
           <div class="row collapse">
           <div class="small-9 columns">
             <input id="right-label" type="date" name="usercondition">
@@ -112,7 +114,7 @@
         
       <% elsif f.class == Time %>
            
-          <div class="large-4 columns">
+          <div class="large-5 columns">
           <div class="row collapse">      
           <div class="small-9 columns">
             <input id="right-label" type="time" name="usercondition" >
@@ -125,7 +127,7 @@
         
       <% elsif f.class == Fixnum %>        
           
-          <div class="large-4 columns">
+          <div class="large-5 columns">
           <div class="row collapse">
           <div class="small-9 columns">
             <input id="right-label" type="number" placeholder="e.g. 1234" name="usercondition">
@@ -138,7 +140,7 @@
        
       <% elsif f.class == Float %>
           
-          <div class="large-4 columns">
+          <div class="large-5 columns">
           <div class="row collapse">
           <div class="small-9 columns">
             <input id="right-label" type="text" placeholder="e.g. 12.34" name="usercondition">
@@ -151,7 +153,7 @@
           
       <% elsif f.class == String %>
            
-          <div class="large-4 columns">
+          <div class="large-5 columns">
           <div class="row collapse">          
           <div class="small-9 columns">
             <input id="right-label" type="text" placeholder="e.g. xxxx" name="usercondition">
