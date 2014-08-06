@@ -404,3 +404,14 @@ if @jvalue!=nil && @cond!=nil && @usrcond!=nil && @jvalue!="" && @cond!="" && @u
     end
  end
  %>
+
+<% if @dummyrules!= nil %>
+  <% @dummyrules.each do |r1| %>
+        <%= r1.id %>
+        <%= r1.name %>
+        <%= r1.ratings %>
+        <%= r1.start_date %>
+        <%= r1.start_time.strftime("%H:%M:%S") %>
+        <% @d= r1.devise_id %> <%= @d %> <br>
+  <% end %>
+<% end %>

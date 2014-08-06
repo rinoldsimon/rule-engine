@@ -17,25 +17,19 @@ class HomeController < ApplicationController
     #@url = "https://graph.facebook.com/crisrinold" 
     #@jsondata = JSON.parse HTTParty.get(@url).response.body 
     
+    #sample jsondata for testing
     @jsondata = {
     "id"=> "100001840157358",
-    "first_name"=> "Rinold",
-    "gender"=> "male",
-    "last_name"=> "Simon",
-    "link"=> "https://www.facebook.com/crisrinold",
-    "locale"=> "en_US",
     "name"=> "Rinold Simon",
-    "username"=> "crisrinold",
     "ratings"=> "94.30",
     "start_date"=> "15-1-2012",
-    "end_date"=> "25-5-2014",
-    "start_time"=> "12:30:54",
-    "end_time"=> "5:30:12"
+    "start_time"=> "12:30:54"
      }
 
     #listing data from mongodb
     @homes = Home.all
     @rules = Rule.all
+    @dummyrules = DummyRule.all
 
     #identifying data types
     @jvalue = params[:jvalue] 
@@ -52,6 +46,11 @@ class HomeController < ApplicationController
     @cond = params[:conditions] 
 
     @usrcond = params[:usercondition]
+
+    #sidekiq
+    @dummyrules.each do |d|
+      HardWorker.perform_async(d.devise_id)
+    end
 
   end 
 
