@@ -46,28 +46,6 @@
 <% if @jvalue1 != nil %>
 <% @jvalue1.each do |f| %>
 
-<!--
-<div class="large-2 columns">
-<div class="row collapse">
-
-<div class="small-3 columns">
-  <span class="prefix">Value</span>
-</div>  
-
-<div class="small-9 columns">
-<% if f.class == Time %>
-  <input type="text" value = <%= f.strftime("%H:%M:%S") %> readonly>
-  <% elsif f.class == Date %>
-  <input type="text" value = <%= f.strftime("%m/%d/%Y") %> readonly>
-  <% else %>
-  <textarea wrap="off" readonly><%= f %> </textarea>
-  <% end %>
-</div>
-
-</div>
-</div>
--->
-
 <div class="large-2 columns">
 <select name="conditions" > 
   <% if f.class == Fixnum %>

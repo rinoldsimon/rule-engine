@@ -48,6 +48,7 @@ class HomeController < ApplicationController
     @usrcond = params[:usercondition]
 
     #sidekiq
+    @dummyrules = DummyRule.all
     @dummyrules.each do |d|
       HardWorker.perform_async(d.devise_id)
     end
