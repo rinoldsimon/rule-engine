@@ -147,12 +147,25 @@
 <% end %>
 <% end %>
 
+<div class="large-2 columns">
+<select name="devid1">
+  <option value="">Select devise-id </option>
+    <% if @dummyrules!= nil %>
+      <% @dummyrules.each do |r1| %>
+        <option value="<%= r1.devise_id %>" <% if @devid1 == "#{r1.devise_id}" -%> selected="selected" <% end -%> >
+          <%= r1.devise_id %>
+        </option>
+      <%end%>
+    <%end%>
+</select>
+</div>
+
 <% if @usrcond != "" && @usrcond != nil %>
  
  <% if @jvalue1 != nil %>
    <% @jvalue1.each do |f1| %>
 
-<br><br><br><br>
+<br><br><br><br><br><br><br><br>
 
 <div class = "row">
 <center>

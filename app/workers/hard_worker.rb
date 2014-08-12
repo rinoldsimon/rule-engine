@@ -8,27 +8,20 @@ class HardWorker
   def perform(dev)
   	@dummy = DummyRule.collection.find(devise_id: dev)
 
-  	@dummy.each do |d1|
-  	puts d1
-  	puts d1.keys
-  	puts d1.key("harish")
-  	puts d1[:name]
-    end
-
     @rules = Rule.all
     @rules.each do|r|
       if r.datatype == "Fixnum"
         @dummy.each do |d|
           if r.condition == "<"
-            if "#{d[:_id]}" < r.usercond
+            if d[:_id] < r.usercond.to_i
               @a = "True"
               @m = "Mail"
-            else
+            else 
               @a = "False"
               @m = "--"
             end
           elsif r.condition == ">"
-            if "#{d[:_id]}" > r.usercond
+            if d[:_id] > r.usercond.to_i
               @a = "True"
               @m = "Mail"
             else
@@ -36,7 +29,7 @@ class HardWorker
               @m = "--"
             end
           elsif r.condition == "="
-            if "#{d[:_id]}" == r.usercond
+            if d[:_id] == r.usercond.to_i
               @a = "True"
               @m = "Mail"
             else
@@ -53,14 +46,16 @@ class HardWorker
           result: @a,
           action: @m
            } 
-        
+          @ruleid = Rule.collection.find(value: "#{d[:_id]}", condition: r.condition, usercond: r.usercond).count()
+          if @ruleid == 0
+            Rule.collection.insert(@rule)
+          end
         end
-        #Rule.collection.insert(@rule) 
         
       elsif r.datatype == "String"
         @dummy.each do |d|
           if r.condition == "regex"
-            if "#{d[:name]}"=~/#{r.usercond}/
+            if d[:name]=~/#{r.usercond}/
               @a = "True"
               @m = "Mail"
             else
@@ -77,9 +72,11 @@ class HardWorker
           result: @a,
           action: @m
            } 
-        
+        @ruleid = Rule.collection.find(value: "#{d[:name]}", condition: r.condition, usercond: r.usercond).count()
+          if @ruleid == 0
+            Rule.collection.insert(@rule)
+          end
         end
-        #Rule.collection.insert(@rule) 
       end 
     end
 
