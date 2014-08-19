@@ -46,9 +46,15 @@ class HardWorker
           result: @a,
           action: @m
            } 
+        @result = {
+          dev_id: d[:devise_id],
+          condition: r.condition,
+          result: @a
+           }
           @ruleid = Rule.collection.find(value: "#{d[:_id]}", condition: r.condition, usercond: r.usercond).count()
           if @ruleid == 0
             Rule.collection.insert(@rule)
+            Result.collection.insert(@result)
           end
         end
         
@@ -72,9 +78,15 @@ class HardWorker
           result: @a,
           action: @m
            } 
+        @result = {
+          dev_id: d[:devise_id],
+          condition: r.condition,
+          result: @a
+           }
         @ruleid = Rule.collection.find(value: "#{d[:name]}", condition: r.condition, usercond: r.usercond).count()
           if @ruleid == 0
             Rule.collection.insert(@rule)
+            Result.collection.insert(@result)
           end
         end
       end 

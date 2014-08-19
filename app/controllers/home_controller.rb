@@ -30,6 +30,7 @@ class HomeController < ApplicationController
     @homes = Home.all
     @rules = Rule.all
     @dummyrules = DummyRule.all
+    @result = Result.all
 
     #identifying data types
     @jvalue = params[:jvalue] 

@@ -152,7 +152,7 @@
   <option value="">Select devise-id </option>
     <% if @dummyrules!= nil %>
       <% @dummyrules.each do |r1| %>
-        <option value="<%= r1.devise_id %>" <% if @devid1 == "#{r1.devise_id}" -%> selected="selected" <% end -%> >
+        <option value="<%= r1.devise_id %>" >
           <%= r1.devise_id %>
         </option>
       <%end%>
@@ -381,6 +381,26 @@ if @jvalue!=nil && @cond!=nil && @usrcond!=nil && @jvalue!="" && @cond!="" && @u
         <td><%= r.usercond %></td>
         <td><%= r.result %></td>
         <% @a= r.action %> <td><%= @a %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Devise Id</th>
+      <th>Rule</th>
+      <th>Result</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @result.each do |r| %>
+      <tr>
+        <td><%= r.dev_id %></td>
+        <td><%= r.condition %></td>
+        <td><%= r.result %></td>
       </tr>
     <% end %>
   </tbody>
